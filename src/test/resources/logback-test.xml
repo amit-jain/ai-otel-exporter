@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Suppress noisy loggers -->
+    <logger name="unknown.jul.logger" level="OFF"/>
+    <logger name="okhttp3.internal.http2.Http2" level="OFF"/>
+    <logger name="io.netty" level="OFF"/>
+    <logger name="io.vertx" level="OFF"/>
+    <logger name="io.grpc" level="OFF"/>
+    <logger name="io.opentelemetry.exporter.internal" level="OFF"/>
+    <logger name="org.eclipse.aether" level="OFF"/>
+    <logger name="org.apache.maven" level="OFF"/>
+    <logger name="org.eclipse.sisu" level="OFF"/>
+    <logger name="org.jboss.threads" level="OFF"/>
+    <logger name="org.xnio" level="OFF"/>
+    <logger name="io.quarkus" level="WARN"/>
+    <logger name="io.opentelemetry" level="WARN"/>
+
+    <!-- Keep console appender for test-relevant logs -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="io.opentelemetry.exporter.logging.LoggingSpanExporter" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Set our classes to DEBUG level -->
+    <logger name="io.telemetry.ai.otel.tracing" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="io.telemetry.ai.otel.tracing.quarkus" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="io.telemetry.ai.otel.tracing.test" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="io.telemetry.ai.otel.util.MockSearchService" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Add PII detector classes at INFO level -->
+    <logger name="io.telemetry.ai.otel.pii" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="io.telemetry.ai.otel.test" level="INFO" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <!-- Set specific loggers to DEBUG level -->
+    <logger name="io.telemetry.ai.otel.metrics" level="DEBUG" />
+    <logger name="io.telemetry.ai.otel.extractor" level="DEBUG" />
+
+    <!-- Set root logger to WARN to suppress other noise -->
+    <root level="WARN">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
